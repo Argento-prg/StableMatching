@@ -10,7 +10,7 @@ func isElemInArray(container []bool, element bool) bool {
 	return false
 }
 
-//получить индекс элемента в массиве
+//получить индекс элемента в массиве булевых переменных
 func findIndexBool(container []bool, element bool) int {
 	for id, elem := range container {
 		if elem == element {
@@ -20,6 +20,7 @@ func findIndexBool(container []bool, element bool) int {
 	return -1
 }
 
+//получить индекс элемента в массиве целочисленных переменных
 func findIndexInt(container []int, element int) int {
 	for id, elem := range container {
 		if elem == element {
@@ -29,6 +30,7 @@ func findIndexInt(container []int, element int) int {
 	return -1
 }
 
+//удалить элемент из среза по индексу
 func remove(s [][2]int, i int) [][2]int {
 	var match [][2]int
 	for j := 0; j < len(s); j++ {
@@ -71,7 +73,7 @@ func FindStableMatching(manPair [][]int, womenPair [][]int) [][2]int {
 	//поиск паросочетаний
 	for isElemInArray(isManFreeArray, true) {
 		indexManFree := findIndexBool(isManFreeArray, true)
-		//
+		//предложим каждой женщине, у которой нет пары, найти пары по её приоритету мужчин
 		if isElemInArray(isManProposed[indexManFree], false) {
 			indexWomanFree := -1
 			//получить индекс свободной женщины с максимальным рейтингом
@@ -127,12 +129,13 @@ func FindStableMatching(manPair [][]int, womenPair [][]int) [][2]int {
 				//индекс мужчины, который подходит текущей женщине
 				indexManForCurrentWomen := -1
 				isWomanAccept := false
-				////перерасчёт индекса
+				//перерасчёт индекса
 				if indexWomanFree == -1 {
 					tempIndexWomanFree = len(womenPair) - 1
 				} else {
 					tempIndexWomanFree = indexWomanFree
 				}
+				//может ли эта женщина выбрать этого мужчину
 				for idx := range womenPair[tempIndexWomanFree] {
 					if womenPair[tempIndexWomanFree][idx] == indexManFree {
 						isWomanAccept = true
@@ -155,7 +158,7 @@ func FindStableMatching(manPair [][]int, womenPair [][]int) [][2]int {
 			}
 		}
 	}
-	//
+	//удаляем нестабильные паросочетания
 	for i := len(match) - 1; i >= 0; i-- {
 		if match[i][0] == -1 || match[i][1] == -1 {
 			match = remove(match, i)
